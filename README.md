@@ -19,7 +19,7 @@ As a user, I want to translate numbers into their english word form.
 
 #### Details
 
-* Start with numbers less than a thousand then work your way up to one trillion
+* Start with numbers less than one thousand then work your way up to one trillion
 * Don't worry about connecting words with 'and'
 * Don't worry about using commas
 
