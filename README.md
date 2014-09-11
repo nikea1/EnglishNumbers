@@ -3,8 +3,6 @@
 ## Introduction
 In this challenge you will create a webpage that will take a number and return the English translation.
 
-For example, entering the number 115 would return 'one hundred fifteen'.
-
 You are free to do this in any language or framework, however the sample is written in JavaScript.
 
 ## Getting Started
@@ -15,13 +13,20 @@ To begin, Fork this repository to your GitHub account by clicking the Fork icon 
 *If you're new to Forking, we suggest reading the <a href='https://help.github.com/articles/fork-a-repo' target='_blank'>GitHub documentation</a> before moving forward.*
 
 ## <a name='userstory'></a>User Story
-As a user, I want to translate numbers into their english word form.
+As a user, I want to translate numbers into their English word form.
 
 #### Details
 
 * Start with numbers less than one thousand then work your way up to one trillion
 * Don't worry about connecting words with 'and'
-* Don't worry about using commas
+* Make sure to strip out any commas
+
+## Examples
+
+* **13**: Thirteen
+* **141**: One hundred forty one
+* **6,500,016**: Six million five hundred thousand sixteen
+
 
 ## Tests
 We've included specs to test your code using Mochai and Chai.
