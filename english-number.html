@@ -1,124 +1,134 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  </head>
-  <body>
-  	<label for="input">Input number from 0 to 1000000000000</label>
-  	<input id="input" type="number" min="0" max="10000000000000" name="ordinal"/>
-  	<input id="submit" type="submit" />
+<head>
+</head>
+<body>
+	<label for="input">Input number from 0 to 1000000000000</label>
+	<input id="input" type="number" min="0" max="10000000000000" name="ordinal"/>
+	<input id="submit" type="submit" />
 
-  	<h1 id="output"></h1>
-  	<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-  	<script type="text/javascript">
-  	//if the digit in front is zero
-  	var ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+	<h1 id="output"></h1>
 
-  	//is second to last digit is one refer to this list
-  	var tens1 = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+	<script
+	src="https://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	crossorigin="anonymous"></script>
+	<script type="text/javascript">
+	  	//if the digit in front is zero
+	  	var ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
 
-  	var  tens2 = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+	  	//is second to last digit is one refer to this list
+	  	var tens1 = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
 
-  	
-  	//0 -> ones if index is zero or size 1
-  	//1 -> if one ones become tens1 else tens2 and ones
-  	//2 -> hundred
-  	//3 -> thousand
-  	//4 -> ten thos
-  	//5 -> hundred 
+	  	var  tens2 = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+
+	  	
+	  	//0 -> ones if index is zero or size 1
+	  	//1 -> if one ones become tens1 else tens2 and ones
+	  	//2 -> hundred
+	  	//3 -> thousand
+	  	//4 -> ten thos
+	  	//5 -> hundred 
 
 
-  		$("#submit").on("click", function(){
-  			var value = $("#input").val();
-  			if(Number(value) > 1000000000000) value = "1000000000000";
-  			console.log(value);
+	  	$("#submit").on("click", function(){
+	  		var value = $("#input").val();
+	  		if(Number(value) > 1000000000000) 
+	  			{
+	  				value = "1000000000000";	
+	  			 	$("#input").val("1000000000000");
+	  			}
 
+	  		console.log(value);
+  			//splits up numbers ino separate digits
   			var res = value.split("");
   			
+  			//convert each array item into numbers data type values 
   			res.forEach(function(val, i, res){ res[i] = Number(val)})
 
-  			var size = res.length;
-  			var numstr = "";
-			var teen = false;
-			//omit flag
-			var skip = 0;
+  			var size = res.length; //get size of array
+  			var numstr = ""; //initalize display string
+			var teen = false; //set flag for "teen number group" to false
+			var skip = 0;//initialize omit flag
 
-  			if(size == 1 && res[0] == 0)
-  				numstr = "zero";
-  			else{
-	  			for(i = 0; i < size; i++){
+			//if zero is inputed
+			if(size == 1 && res[0] == 0)
+				numstr = "zero";
+			//if every other number is inputed
+			else{
+				for(i = 0; i < size; i++){
 	  				//current number
 	  				var r = res[i];
 	  				//keeps track of digit spot
 	  				var s = (size-1-i);
-	  				//determines if digit is ones, tens, or hundred
+	  				//determines if digit is a ones, tens, or hundred type digit spot
 	  				var t = (s%3);
 	  				
 
-	  				//ones and teens
+	  				//ones and teens display
 	  				if(t == 0){
 	  					if(!teen){
 	  						numstr += ones[r];
 	  						if(r == 0){skip++}
 	  					}
-	  					//print "teen" number
+	  					//print from "teen" number group
 	  					else{
-		  					numstr += tens1[r];
-		  					teen = false
+	  						numstr += tens1[r];
+	  						teen = false
 	  					}
 	  				}
-	  				//tens
+	  				//tens display
 	  				else if(t == 1){
 
 	  					if(r == 1)
 	  						teen = true;
 	  					else{
 	  						if(r == 0){skip++}
-	  						numstr += tens2[r]+" ";
+	  							numstr += tens2[r]+" ";
 
 	  					}
 	  				}
-	  				//hundreds
+	  				//hundreds display
 	  				else if(t == 2){
 	  					if(r != 0)
 	  						numstr += ones[r] + " hundred ";
 	  					else skip++;
 	  				}
-	  				if(skip < 3)
+	  				//if there is atleat one digit that is not zero in the hundred, tens, and ones type group then add lable
+	  				if(s%3 == 0)
 	  				{
-		  				//trillion
-		  				if(s == 12) {
-		  					numstr += " trillion ";skip = 0;
-		  				}
-		  				//billion
-		  				if(s == 9) {
-		  					numstr += " billion ";skip = 0;
-		  				}
-		  				//million
-		  				if(s == 6) {
-		  					numstr += " million ";skip = 0;
-		  				}
-		  				//thousand
-		  				if(s == 3){ 
-		  					numstr += " thousand ";skip = 0;
-		  				}
-		  				
-	  				}
-	  				else skip = 0;
-	  			}
-  			}	
+		  				if(skip < 3)
+		  				{
 
-
-  			
-  			console.log(numstr);
-  			$('#output').text(value +" : "+numstr)
-  			// console.log(size);
+			  				//trillion
+			  				if(s == 12) {
+			  					numstr += " trillion ";skip = 0;
+			  				}
+			  				//billion
+			  				else if(s == 9) {
+			  					numstr += " billion ";skip = 0;
+			  				}
+			  				//million
+			  				else if(s == 6) {
+			  					numstr += " million ";skip = 0;
+			  				}
+			  				//thousand
+			  				else if(s == 3){ 
+			  					numstr += " thousand ";skip = 0;
+			  				}
+			  				
+			  			}
+			  			//else don't label
+			  			else skip = 0;
+			  		}
+		  		}
+		  	}	
+		  	console.log(numstr);
+		  	$('#output').text(value +" : "+numstr)
   			console.log(res);
   			
   			return false;
   		})
   	</script>
   </body>
-</html>
+  </html>
